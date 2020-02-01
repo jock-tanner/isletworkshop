@@ -1,1 +1,23 @@
 {% extends 'bootstrap4/bootstrap4.html' %}
+{% load staticfiles %}
+
+{% block bootstrap4_extra_head %}
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/easyzoom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/hamburgers.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/meanmenu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slinky.min.css' %}">
+    {# fonts #}
+    <link rel="stylesheet" href="{% static 'css/roboto.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pe-icon-7-stroke.css' %}">
+{% endblock %}
+
+{% block bootstrap4_extra_script %}
+    <script src="{% static 'js/jquery.magnific-popup.min.js'%}"></script>
+    <script src="{% static 'js/easyzoom.js'%}"></script>
+    <script src="{% static 'js/jquery.meanmenu.min.js'%}"></script>
+    <script src="{% static 'js/slinky.min.js'%}"></script>
+{% endblock %}
