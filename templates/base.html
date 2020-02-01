@@ -14,10 +14,12 @@
     <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
     <link rel="stylesheet" href="{% static 'css/icofont.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/pe-icon-7-stroke.css' %}">
-    {# custom #}
+    {# theme #}
     <link rel="stylesheet" href="{% static 'css/bundle.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    {# custom #}
+    <link rel="stylesheet" href="{% static 'css/isletworkshop.css' %}">
 {% endblock %}
 
 {% block bootstrap4_content %}
@@ -97,6 +99,24 @@
         </div>
     {% endblock %}
     </header>
+    {% block content %}
+
+    {% endblock %}
+    <footer class="footer-area">
+    {% block content_footer %}
+        <div class="footer-bottom ptb-20 border-top-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="copyright-handicraft">
+                            <p>Copyright © <a href="https://hastech.company/">HasTech</a> 2018 . All Right Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    </footer>
 {% endblock %}
 
 {% block bootstrap4_extra_script %}
