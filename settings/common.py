@@ -14,6 +14,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'bootstrap4',
+
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -74,3 +78,17 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_files'), ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DEPLOY_DIR, 'media')
+
+BOOTSTRAP4 = {
+    'css_url': {
+        'href': os.path.join(STATIC_URL, 'css/bootstrap.min.css'),
+    },
+    'theme_url': None,
+    'javascript_url': {
+        'url': os.path.join(STATIC_URL, 'js/bootstrap.bundle.min.js'),
+    },
+    'include_jquery': 'full',
+    'jquery_url': {
+        'url': os.path.join(STATIC_URL, 'js/jquery.min.js'),
+    },
+}
