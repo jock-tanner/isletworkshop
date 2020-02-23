@@ -16,7 +16,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'bootstrap4',
+    'ordered_model',
+    'sorl.thumbnail',
 
+    'catalog',
     'home',
     'users',
 ]
@@ -83,6 +86,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_files'), ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DEPLOY_DIR, 'media')
+
+THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 
 BOOTSTRAP4 = {
     'css_url': {

@@ -1,3 +1,8 @@
 Django<=2.9999999
 psycopg2==2.8.4
+redis==3.4.1
+Pillow<=7.9999999
+sorl-thumbnail==12.6.3
 django-bootstrap4==1.1.1
+django-model-utils==4.0.0
+django-ordered-model==3.3.0
