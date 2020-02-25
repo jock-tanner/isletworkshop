@@ -39,9 +39,6 @@
                         </nav>
                     </div>
                     <div class="handicraft-search-cart">
-                        <div class="handicraft-search">
-                            {% include 'include/search.html' %}
-                        </div>
                         <div class="header-cart-4">
                             {% include 'include/basket.html' %}
                         </div>
@@ -50,6 +47,21 @@
             </div>
         </div>
     {% endblock %}
+        <div class="header-bottom-furniture wrapper-padding-2 border-top-3 border-bottom-2">
+            <div class="container-fluid">
+                <div class="furniture-bottom-wrapper">
+                    <div class="furniture-wishlist">
+                        {% include 'include/breadcrumbs.html' %}
+                    </div>
+                    <div class="furniture-search">
+                        {% include 'include/search.html' %}
+                    </div>
+                    <div class="furniture-login">
+                        {% include 'include/user.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
     {% block content %}
 
@@ -76,18 +88,4 @@
     <script src="{% static 'js/easyzoom.js'%}"></script>
     <script src="{% static 'js/jquery.meanmenu.min.js'%}"></script>
     <script src="{% static 'js/slinky.min.js'%}"></script>
-    <script>
-        (function ($) {
-            var searchToggle = $('.search-toggle');
-            searchToggle.on('click', function(){
-                if($(this).hasClass('open')){
-                   $(this).removeClass('open');
-                   $(this).siblings('.handicraft-content').removeClass('open');
-                }else{
-                   $(this).addClass('open');
-                   $(this).siblings('.handicraft-content').addClass('open');
-                }
-            })
-        })(jQuery);
-    </script>
 {% endblock %}
