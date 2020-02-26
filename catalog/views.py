@@ -1,10 +1,13 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
+from django_filters.views import FilterView
 
+from .filters import ProductFilterSet
 from .models import Product
 
 
-class CatalogView(ListView):
-    paginate_by = 12
+class CatalogView(FilterView):
+    filterset_class = ProductFilterSet
+    paginate_by = 6
     paginate_orphans = 3
     model = Product
     template_name = 'catalog.html'

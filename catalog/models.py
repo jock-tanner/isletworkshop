@@ -57,6 +57,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = _('product')
         verbose_name_plural = _('products')
+        ordering = ('created_at', )
+
+    def __str__(self):
+        """ Return the matching translation of the product title. """
+        return getattr(self, 'title_'+get_language()[:2], self.title)
 
 
 class Image(OrderedModel):

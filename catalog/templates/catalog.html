@@ -1,1 +1,62 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load thumbnail %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="shop-page-wrapper ptb-40">
+        <div class="container">
+            <div class="shop-bar-area">
+                <div class="shop-bar pb-60">
+                    <div class="shop-found">
+                        <p>
+                            {% trans 'Showing' %}
+                            <span>{{ page_obj.object_list.count }}</span>
+                            {% trans 'of' %}
+                            <span>{{ page_obj.paginator.count }}</span>
+                        </p>
+                    </div>
+                    <div class="shop-selector">
+                        <form id="filter_form" action="" method="get">
+                            {{ filter.form.as_p }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="shop-product-content">
+                <div class="row">
+                    {% for product in page_obj %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product-wrapper product-box-style mb-30">
+                            <div class="product-img">
+                                <a href="{% url 'catalog:product' product.pk %}">
+                                    {% thumbnail product.images.all.0.image "312x400" crop="center" as img %}
+                                    <img src="{{ img.url }}" alt="{{ product.title }}" />
+                                    {% endthumbnail %}
+                                </a>
+                            </div>
+                            <div class="product-content">
+                                <h4>{{ product.title }}</h4>
+                                <span>${{ product.base_price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% if page_obj.has_other_pages %}
+        <div class="pagination-style mt-10 text-center">
+            {% bootstrap_pagination page_obj extra=request.GET.urlencode %}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block bootstrap4_extra_script %}
+    <script>
+    $('#filter_form').change(function () {
+        this.submit();
+    });
+    </script>
+{% endblock %}
