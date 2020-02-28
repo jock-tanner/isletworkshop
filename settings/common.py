@@ -80,7 +80,11 @@ LOGOUT_REDIRECT_URL = 'login'
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Русский'),
+]
 USE_I18N = True
 USE_L10N = True
 

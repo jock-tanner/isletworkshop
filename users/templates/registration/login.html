@@ -19,7 +19,7 @@
                                 <form action="{% url 'login' %}" method="post">
                                     {% csrf_token %}
                                     {{ form }}
-
+                                    <input type="hidden" name="next" value="{{ request.GET.next|urlencode }}"/>
                                     <div class="button-box">
                                         <div class="login-toggle-btn">
                                             <input type="checkbox" name="remember_me" />

@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth import models as auth_models
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language, gettext_lazy as _
+from model_utils.choices import Choices
+from model_utils.tracker import FieldTracker
 
 
 class UserManager(BaseUserManager):
@@ -37,7 +40,7 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class AbstractUser(AbstractBaseUser, PermissionsMixin):
+class AbstractUser(AbstractBaseUser, auth_models.PermissionsMixin):
     """ Get rid of username. """
 
     first_name = models.CharField(
@@ -118,4 +121,39 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(AbstractUser):
-    pass
+
+    languages = Choices(*settings.LANGUAGES)
+
+    language = models.CharField(
+        _('Language'),
+        max_length=5,
+        choices=languages,
+        default=settings.LANGUAGE_CODE,
+    )
+
+    tracker = FieldTracker(fields=('language', ))
+
+    def set_language(self, language: str):
+        self.language = language
+        self.save()
+
+
+class AnonymousUser(auth_models.AnonymousUser):
+
+    @property
+    def language(self):
+        return get_language() or settings.LANGUAGE_CODE
+
+    def set_language(self, language: str):
+        pass
+
+
+auth_models.AnonymousUser = AnonymousUser
+
+
+class Group(auth_models.Group):
+
+    class Meta:
+        proxy = True
+        verbose_name = _('group')
+        verbose_name_plural = _('groups')
