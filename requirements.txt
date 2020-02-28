@@ -7,4 +7,4 @@ django-bootstrap4==1.1.1
 django-model-utils==4.0.0
 django-ordered-model==3.3.0
 # django-filter==2.2.0 fixed:
-git+git://github.com/jock-tanner/django-filter@master#django-filter
+git+git://github.com/jock-tanner/django-filter@master#egg=django-filter

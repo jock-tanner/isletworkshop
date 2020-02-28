@@ -54,6 +54,7 @@
 {% endblock %}
 
 {% block bootstrap4_extra_script %}
+    {{ block.super }}
     <script>
     $('#filter_form').change(function () {
         this.submit();

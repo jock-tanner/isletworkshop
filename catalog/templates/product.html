@@ -1,5 +1,80 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 
 {% block content %}
+    <div class="product-details ptb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-7 col-12">
+                    <div class="product-details-img-content">
+                        <div class="product-details-tab mr-35">
+                            <div class="product-details-large tab-content">
+                                {% for image in product.images.all %}
+                                <div id="pro_details_{{ image.pk }}" class="tab-pane {% if forloop.first %}active {% endif %}show fade" role="tabpanel">
+                                    <div class="easyzoom easyzoom--overlay">
+                                        {% thumbnail image.image "600x656" crop="center" as img %}
+                                        <a href="{{ image.image.url }}">
+                                            <img src="{{ img.url }}" alt="{{ product.title }}" />
+                                        </a>
+                                        {% endthumbnail %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="product-details-small nav mt-12" role=tablist>
+                                {% for image in product.images.all %}
+                                <a class="{% if forloop.first %}active {% endif %}mr-12 mb-12" href="#pro_details_{{ image.pk }}" data-toggle="tab" role="tab" aria-selected="true">
+                                    {% thumbnail image.image "141x135" crop="center" as img%}
+                                    <img src="{{ img.url }}" alt="{{ product.title }}" />
+                                    {% endthumbnail %}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-5 col-12">
+                    <div class="product-details-content">
+                        <h3>{{ product.title }}</h3>
+                        <div class="details-price">
+                            <span>{{ product.base_price }}</span>
+                        </div>
+                        <p>{{ product.description|safe }}</p>
+                        <div class="quickview-plus-minus">
+                            <div class="cart-plus-minus">
+                                <input type="text" value="01" name="qtybutton" class="cart-plus-minus-box">
+                            </div>
+                            <div class="quickview-btn-cart">
+                                <a class="btn-hover-black" href="#">add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
+{% block bootstrap4_extra_script %}
+    {{ block.super }}
+    <script>
+    var $easyzoom = $('.easyzoom').easyZoom();
+
+    $('.cart-plus-minus').prepend('<div class="dec qtybutton">-</div>');
+    $('.cart-plus-minus').append('<div class="inc qtybutton">+</div>');
+    $('.qtybutton').on('click', function () {
+        var $button = $(this);
+        var oldValue = $button.parent().find('input').val();
+        if ($button.text() == '+') {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+        }
+        $button.parent().find('input').val(newVal);
+    });
+    </script>
 {% endblock %}

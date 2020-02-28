@@ -7617,7 +7617,7 @@ h5.panel-title {
 .product-details-small a > img {
     width: 100%;
 }
-.product-details-small a:last-child {
+.product-details-small a:nth-child(4) {
     margin-right: 0;
 }
 .description-review-title {
