@@ -3,7 +3,7 @@
     <li>{{ user.get_short_name }}</li>
     <li><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></li>
     {% else %}
-    <li><a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">{% trans 'Log in' %}</a></li>
+    <li><a href="{% url 'login' %}?next={{ request.get_full_path }}">{% trans 'Log in' %}</a></li>
     <li><a href="#">{% trans 'Register' %}</a></li>
     {% endif %}
 </ul>

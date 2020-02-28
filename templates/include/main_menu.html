@@ -13,8 +13,8 @@
     <li>
         <a href=""><i class="ti-world"></i> {% trans 'Language' %}</a>
         <ul class="single-dropdown">
-            <li><a href="{% url 'users:language' %}?lang=en&next={{ request.get_full_path|urlencode }}">English</a></li>
-            <li><a href="{% url 'users:language' %}?lang=ru&next={{ request.get_full_path|urlencode }}">Русский</a></li>
+            <li><a href="{% url 'users:language' %}?lang=en&next={{ request.get_full_path }}">English</a></li>
+            <li><a href="{% url 'users:language' %}?lang=ru&next={{ request.get_full_path }}">Русский</a></li>
         </ul>
     </li>
 </ul>
