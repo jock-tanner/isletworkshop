@@ -96,6 +96,22 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DEPLOY_DIR, 'media')
 
 THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
+THUMBNAIL_REDIS_DB = 0
+THUMBNAIL_REDIS_HOST = '127.0.0.1'
+THUMBNAIL_REDIS_PORT = 6379
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+    },
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_CACHE_ALIAS = 'default'
 
 BOOTSTRAP4 = {
     'css_url': {
