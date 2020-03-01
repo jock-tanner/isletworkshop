@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
+{% load i18n %}
+{% load cart %}
 
 {% block content %}
+    {% cart as cart %}
     <div class="product-details ptb-40">
         <div class="container">
             <div class="row">
@@ -40,14 +43,21 @@
                             <span>{{ product.base_price }}</span>
                         </div>
                         <p>{{ product.description|safe }}</p>
-                        <div class="quickview-plus-minus">
+                        <form class="quickview-plus-minus" method="post" action="{% url 'cart:add' product_id=product.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}" />
+
                             <div class="cart-plus-minus">
-                                <input type="text" value="01" name="qtybutton" class="cart-plus-minus-box">
+                                <input type="text" value="1" name="quantity" class="cart-plus-minus-box" />
                             </div>
                             <div class="quickview-btn-cart">
-                                <a class="btn-hover-black" href="#">add to cart</a>
+                                <button class="btn-hover-black" type="submit">
+                                    {% cart_quantity product.id as q %}
+                                    {% if q == 0 %}{% trans 'Add to cart' %}{% else %}{{ q }} {% trans 'in cart' %}{% endif %}
+                                </button>
                             </div>
-                        </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
@@ -60,8 +70,9 @@
     <script>
     var $easyzoom = $('.easyzoom').easyZoom();
 
-    $('.cart-plus-minus').prepend('<div class="dec qtybutton">-</div>');
-    $('.cart-plus-minus').append('<div class="inc qtybutton">+</div>');
+    $('.cart-plus-minus')
+        .prepend('<div class="dec qtybutton">-</div>')
+        .append('<div class="inc qtybutton">+</div>');
     $('.qtybutton').on('click', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
@@ -71,7 +82,7 @@
             if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
             } else {
-                newVal = 1;
+                var newVal = 1;
             }
         }
         $button.parent().find('input').val(newVal);

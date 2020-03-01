@@ -488,6 +488,16 @@
 .cart-title h6 a:hover {
     color: #050035;
 }
+.cart-delete > button {
+    background: none !important;
+    border: none;
+    padding: 0;
+    color: #070b21;
+    font-size: 18px;
+}
+.cart-delete > button:hover {
+    color: #050035;
+}
 .cart-title > span {
     display: block;
     margin: 9px 0 0;
@@ -9533,7 +9543,8 @@ input.cart-plus-minus-box {
     justify-content: flex-start;
     padding-top: 5px;
 }
-.quickview-btn-cart > a {
+.quickview-btn-cart > a, .quickview-btn-cart > button {
+    border: none;
     background-color: #050035;
     color: #fff;
     display: inline-block;

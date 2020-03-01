@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'catalog',
     'home',
     'users',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +113,8 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 SESSION_CACHE_ALIAS = 'default'
+
+CART_SESSION_KEY = '_cart'
 
 BOOTSTRAP4 = {
     'css_url': {

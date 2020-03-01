@@ -1,22 +1,33 @@
+{% load thumbnail %}
+{% load cart %}
+
+{% cart as cart %}
 <a class="icon-cart" href="#">
     <i class="pe-7s-shopbag"></i>
-    <span class="handicraft-count">1</span>
+    <span class="handicraft-count">{{ cart|length }}</span>
 </a>
 
 <ul class="cart-dropdown">
+    {% for cart_product_id, cart_product in cart.items %}
     <li class="single-product-cart">
         <div class="cart-img">
-            <a href="#"><img src="assets/img/cart/1.jpg" alt=""></a>
+            <a href="{{  cart_product.image.image.url }}">
+                {% thumbnail cart_product.image.image '85x85' crop='center' as img %}
+                <img src="{{ img.url }}" alt="{{ cart_product.title }}">
+                {% endthumbnail %}
+            </a>
         </div>
         <div class="cart-title">
-            <h5><a href="#"> Bits Headphone</a></h5>
-            <h6><a href="#">Black</a></h6>
-            <span>$0.00 x 1</span>
+            <h5><a href="{% url 'catalog:product' cart_product_id %}">{{ cart_product.title }}</a></h5>
+            <p>${{ cart_product.price }}×{{ cart_product.quantity }}</p>
         </div>
-        <div class="cart-delete">
-            <a href="#"><i class="ti-trash"></i></a>
-        </div>
+        <form class="cart-delete" method="post" action="{% url 'cart:remove' product_id=cart_product_id %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <button type="submit"><i class="ti-trash"></i></button>
+        </form>
     </li>
+    {% endfor %}
     <li class="cart-space">
         <div class="cart-sub">
             <h4>Subtotal</h4>
