@@ -4,7 +4,7 @@
 {% cart as cart %}
 <a class="icon-cart" href="#">
     <i class="pe-7s-shopbag"></i>
-    <span class="handicraft-count">{{ cart|length }}</span>
+    {% if cart %}<span class="handicraft-count">{{ cart|length }}</span>{% endif %}
 </a>
 
 <ul class="cart-dropdown">
@@ -33,7 +33,7 @@
             <h4>Subtotal</h4>
         </div>
         <div class="cart-price">
-            <h4>$0.00</h4>
+            <h4>${{ cart|subtotal }}</h4>
         </div>
     </li>
     <li class="cart-btn-wrapper">

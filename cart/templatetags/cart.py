@@ -1,3 +1,5 @@
+from typing import Dict
+
 from django.template.base import Node, Variable
 from django.template.library import Library
 from django.template.exceptions import TemplateSyntaxError
@@ -11,12 +13,12 @@ register = Library()
 
 class CartNode(Node):
 
+    msg = 'Usage: "{% cart as <new_variable> %}".'
+
     def __init__(self, parser, token):
         bits = token.split_contents()
         if any([len(bits) != 3, bits[1] != 'as']):
-            raise TemplateSyntaxError(
-                'Usage: "{% cart as <new_variable> %}".'
-            )
+            raise TemplateSyntaxError(self.msg)
         self._name = bits[2]
 
     def render(self, context):
@@ -42,12 +44,12 @@ class CartNode(Node):
 
 class CartQuantityNode(Node):
 
+    msg = 'Usage: "{% cart_quantity <product_id> as <new_variable> %}".'
+
     def __init__(self, parser, token):
         bits = token.split_contents()
         if any([len(bits) != 4, bits[2] != 'as']):
-            raise TemplateSyntaxError(
-                'Usage: "{% cart_quantity <product_id> %}".'
-            )
+            raise TemplateSyntaxError(self.msg)
         self._name = bits[3]
         self._product_id = Variable(bits[1])
 
@@ -73,3 +75,9 @@ def cart(parser, token):
 @register.tag
 def cart_quantity(parser, token):
     return CartQuantityNode(parser, token)
+
+
+@register.filter
+def subtotal(cart: Dict) -> str:
+    """ Displays subtotal for the cart. """
+    return str(sum([n['quantity']*n['price'] for i, n in cart.items()]))
