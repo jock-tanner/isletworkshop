@@ -42,7 +42,9 @@
                     </div>
                     <div class="handicraft-search-cart">
                         <div class="header-cart-4">
+                            {% block cart %}
                             {% include 'include/cart.html' %}
+                            {% endblock %}
                         </div>
                     </div>
                 </div>
@@ -53,7 +55,9 @@
             <div class="container-fluid">
                 <div class="furniture-bottom-wrapper">
                     <div class="furniture-wishlist">
+                        {% block breadcrumbs %}
                         {% include 'include/breadcrumbs.html' %}
+                        {% endblock %}
                     </div>
                     <div class="furniture-search">
                         {% include 'include/search.html' %}

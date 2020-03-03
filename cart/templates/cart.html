@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load i18n %}
+{% load cart %}
+
+{% block cart %}
+    {% include 'include/dummy_cart.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="cart-main-area pt-95 pb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form id="cart-update-form" action="{% url 'cart:list' %}" method="post">
+                        {% csrf_token %}
+                        <div class="table-content table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>{% trans 'Product' %}</th>
+                                        <th>{% trans 'Price' %}</th>
+                                        <th>{% trans 'Quantity' %}</th>
+                                        <th>{% trans 'Subtotal' %}</th>
+                                        <th>{% trans 'Remove?' %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% cart as cart %}
+                                    {% for prod_id, prod in cart.items %}
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <a href="prod.image.image.url">
+                                                {% thumbnail prod.image.image '85x85' crop='center' as img %}
+                                                <img src="{{ img.url }}" alt="{{ cart_product.title }}">
+                                                {% endthumbnail %}
+                                            </a>
+                                        </td>
+                                        <td class="product-name">
+                                            <a href="{% url 'catalog:product' prod_id %}">{{ prod.title }}</a>
+                                        </td>
+                                        <td class="product-price-cart">
+                                            <span class="amount">${{ prod.price }}</span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <input class="auto-update" type="number" name="quantity_id{{ prod_id }}" value="{{ prod.quantity }}" />
+                                        </td>
+                                        <td class="product-subtotal">
+                                            ${{ prod.subtotal }}
+                                        </td>
+                                        <td class="product-remove">
+                                            <button type="submit" name="remove_id{{ prod_id }}"><i class="ti-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                        <th>${{ cart|subtotal }}</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="coupon cart-page-total">
+                        <a href="{% url 'catalog:catalog' %}">{% trans 'Back to shopping' %}</a>
+                    </div>
+                    <div class="coupon2 cart-page-total">
+                        <a href="#">{% trans 'Proceed to checkout' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block bootstrap4_extra_script %}
+    {{ block.super }}
+    <script>
+        $('.auto-update').on('input', function () {
+            $('#cart-update-form').submit();
+        })
+    </script>
+{% endblock %}

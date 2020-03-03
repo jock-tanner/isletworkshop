@@ -28,11 +28,13 @@ class CartNode(Node):
             cart_ex = {}
             products = Product.objects.filter(id__in=cart)
             for product in products:
+                quantity = cart[product.id]
                 cart_ex[product.id] = {
+                    'image': product.images.first() if product.images else None,
                     'title': product.title,
                     'price': product.base_price,
-                    'image': product.images.first() if product.images else None,
-                    'quantity': cart[product.id],
+                    'quantity': quantity,
+                    'subtotal': product.base_price * quantity,
                 }
             context[self._name] = cart_ex
 

@@ -1,4 +1,5 @@
 {% load thumbnail %}
+{% load i18n %}
 {% load cart %}
 
 {% cart as cart %}
@@ -30,14 +31,14 @@
     {% endfor %}
     <li class="cart-space">
         <div class="cart-sub">
-            <h4>Subtotal</h4>
+            <h4>{% trans 'Subtotal' %}</h4>
         </div>
         <div class="cart-price">
             <h4>${{ cart|subtotal }}</h4>
         </div>
     </li>
     <li class="cart-btn-wrapper">
-        <a class="cart-btn btn-hover" href="#">view cart</a>
-        <a class="cart-btn btn-hover" href="#">checkout</a>
+        <a class="cart-btn btn-hover" href="{% url 'cart:list' %}">{% trans 'View cart' %}</a>
+        <a class="cart-btn btn-hover" href="#">{% trans 'Checkout' %}</a>
     </li>
 </ul>

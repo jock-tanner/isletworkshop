@@ -488,7 +488,8 @@
 .cart-title h6 a:hover {
     color: #050035;
 }
-.cart-delete > button {
+.cart-delete > button,
+.product-remove > button {
     background: none !important;
     border: none;
     padding: 0;
@@ -3771,7 +3772,8 @@ a.banner-book-style-btn:hover {
 .handicraft-search-cart {
     display: flex;
 }
-.header-cart-4 > a {
+.header-cart-4 > a,
+.header-cart-4 > span {
     display: block;
     padding: 55px 0;
     position: relative;
@@ -6664,7 +6666,7 @@ h1.cart-heading {
 }
 .table-content table td {
     border-top: medium none;
-    padding: 40px 10px;
+    padding: 20px 10px;
     vertical-align: middle;
     font-size: 13px;
 }
@@ -6678,6 +6680,9 @@ h1.cart-heading {
     height: 40px;
     padding: 0 5px 0 10px;
     width: 60px;
+}
+.table-content table td input[type="checkbox"] {
+    height: inherit;
 }
 .table-content table td.product-subtotal {
     color: #555;
@@ -6723,7 +6728,7 @@ h1.cart-heading {
 .table-content table td.product-price-cart {
     width: 130px;
 }
-thead {
+thead, tfoot {
     background-color: #f6f6f6;
 }
 .coupon input {
@@ -6782,9 +6787,6 @@ thead {
 }
 .cart-page-total li:last-child {
     border-bottom: none;
-}
-.cart-page-total {
-    padding-top: 50px;
 }
 .cart-page-total > a {
     background-color: #333;
@@ -9536,7 +9538,7 @@ input.cart-plus-minus-box {
     border: 1px solid #dcdcdc;
     overflow: hidden;
     padding: 12px 0 8px 5px;
-    width: 80px;
+    text-align: center;
 }
 .quickview-plus-minus {
     display: flex;

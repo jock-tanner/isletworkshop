@@ -48,3 +48,9 @@ class Cart:
 
     def __getitem__(self, product_id):
         return self._cart[product_id]
+
+    def __setitem__(self, product_id, quantity):
+        self._cart[product_id] = quantity
+
+    def __delitem__(self, product_id):
+        del self._cart[product_id]
