@@ -9,3 +9,4 @@ django-model-utils==4.0.0
 django-ordered-model==3.3.0
 # django-filter==2.2.0 fixed:
 git+git://github.com/jock-tanner/django-filter@master#egg=django-filter
+django-cbrf==0.4.1

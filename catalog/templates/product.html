@@ -40,7 +40,7 @@
                     <div class="product-details-content">
                         <h3>{{ product.title }}</h3>
                         <div class="details-price">
-                            <span>{{ product.base_price }}</span>
+                            <span>{{ product.local_price }}</span>
                         </div>
                         <p>{{ product.description|safe }}</p>
                         <form class="quickview-plus-minus" method="post" action="{% url 'cart:add' product_id=product.id %}">

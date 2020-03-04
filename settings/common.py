@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'ordered_model',
     'sorl.thumbnail',
     'django_filters',
+    'django_cbrf',
 
     'catalog',
     'home',

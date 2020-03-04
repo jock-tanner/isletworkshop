@@ -41,13 +41,13 @@
                                             <a href="{% url 'catalog:product' prod_id %}">{{ prod.title }}</a>
                                         </td>
                                         <td class="product-price-cart">
-                                            <span class="amount">${{ prod.price }}</span>
+                                            <span class="amount">{{ prod.price }}</span>
                                         </td>
                                         <td class="product-quantity">
                                             <input class="auto-update" type="number" name="quantity_id{{ prod_id }}" value="{{ prod.quantity }}" />
                                         </td>
                                         <td class="product-subtotal">
-                                            ${{ prod.subtotal }}
+                                            {{ prod.subtotal }}
                                         </td>
                                         <td class="product-remove">
                                             <button type="submit" name="remove_id{{ prod_id }}"><i class="ti-trash"></i></button>
@@ -61,7 +61,7 @@
                                         <th>&nbsp;</th>
                                         <th>&nbsp;</th>
                                         <th>&nbsp;</th>
-                                        <th>${{ cart|subtotal }}</th>
+                                        <th>{{ cart|subtotal }}</th>
                                         <th>&nbsp;</th>
                                     </tr>
                                 </tfoot>

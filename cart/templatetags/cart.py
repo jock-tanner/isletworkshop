@@ -30,11 +30,18 @@ class CartNode(Node):
             for product in products:
                 quantity = cart[product.id]
                 cart_ex[product.id] = {
-                    'image': product.images.first() if product.images else None,
+                    'image': (
+                        product.images.first()
+                        if product.images
+                        else None
+                    ),
                     'title': product.title,
-                    'price': product.base_price,
+                    'num_price': product.price,
+                    'price': product.local_price,
                     'quantity': quantity,
-                    'subtotal': product.base_price * quantity,
+                    'subtotal': product.price_template().format(
+                        product.price * quantity
+                    ),
                 }
             context[self._name] = cart_ex
 
@@ -82,4 +89,6 @@ def cart_quantity(parser, token):
 @register.filter
 def subtotal(cart: Dict) -> str:
     """ Displays subtotal for the cart. """
-    return str(sum([n['quantity']*n['price'] for i, n in cart.items()]))
+    return Product.price_template().format(
+        sum([n['quantity']*n['num_price'] for i, n in cart.items()])
+    )

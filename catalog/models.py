@@ -1,7 +1,11 @@
 import os
+from decimal import Decimal
 
+from django.conf import settings
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.translation import get_language, gettext_lazy as _
+from django_cbrf.models import Currency, Record
 from model_utils.choices import Choices
 from ordered_model.models import OrderedModel
 from sorl.thumbnail.fields import ImageField
@@ -35,7 +39,7 @@ class Product(models.Model):
     )
 
     # translatable fields
-    title = models.CharField(
+    title_en = models.CharField(
         'title',
         max_length=120,
     )
@@ -43,7 +47,7 @@ class Product(models.Model):
         'название',
         max_length=120,
     )
-    description = models.TextField(
+    description_en = models.TextField(
         'description',
         default='',
         blank=True,
@@ -59,9 +63,51 @@ class Product(models.Model):
         verbose_name_plural = _('products')
         ordering = ('created_at', )
 
+    @staticmethod
+    def _lang():
+        lang = get_language() or settings.LANGUAGE_CODE
+        return lang[:2]
+
+    @cached_property
+    def title(self):
+        return getattr(
+            self, 'title_{}'.format(self._lang()), self.title_en
+        )
+
+    @cached_property
+    def description(self):
+        return getattr(
+            self, 'description_{}'.format(self._lang()), self.description_en
+        )
+
+    @cached_property
+    def price(self) -> Decimal:
+        if self._lang() == 'ru':
+            currency = Currency.objects.filter(iso_char_code='USD').last()
+            record = Record.objects.filter(
+                currency=currency,
+            ).order_by(
+                'date',
+            ).last()
+            # round to 10 roubles, than quantize back to 1 kopeсk/cent
+            return (
+                round(
+                    self.base_price / currency.denomination * record.value, -1
+                )
+            ).quantize(self.base_price)
+
+        return self.base_price
+
+    @classmethod
+    def price_template(cls) -> str:
+        return '{} ₽' if cls._lang() == 'ru' else '${}'
+
+    @property
+    def local_price(self) -> str:
+        return self.price_template().format(self.price)
+
     def __str__(self):
-        """ Return the matching translation of the product title. """
-        return getattr(self, 'title_'+get_language()[:2], self.title)
+        return self.title
 
 
 class Image(OrderedModel):
