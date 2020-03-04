@@ -23,7 +23,9 @@ class Cart:
           Product.id is integer,
         :param quantity: the product's quantity,
         """
-        self._cart[product.id] += quantity
+        self._cart[product.id] = min(
+            self._cart[product.id] + quantity, product.quantity,
+        )
 
         if self._cart[product.id] == 0:
             self._cart.pop(product.id, None)

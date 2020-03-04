@@ -13,17 +13,28 @@ class CartView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         cart = Cart(request)
+        # do less queries per hit
+        products = {p.id: p for p in Product.objects.filter(id__in=cart)}
 
         for k, v in request.POST.items():
+
             if k.startswith('quantity_id'):
                 product_id = int(k.split('_id')[1])
                 quantity = int(v)
-                if quantity > 0:
+
+                if quantity == 0:
+                    del cart[product_id]
+                    continue
+
+                product = products[product_id]
+                if product.type == product.product_types.unlimited:
                     cart[product_id] = quantity
                 else:
-                    del cart[product_id]
+                    # check inventory
+                    cart[product_id] = min(quantity, product.quantity)
+                continue
 
-            elif k.startswith('remove_id'):
+            if k.startswith('remove_id'):
                 product_id = int(k.split('_id')[1])
                 del cart[product_id]
                 break
