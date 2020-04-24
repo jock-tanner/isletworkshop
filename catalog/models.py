@@ -37,6 +37,12 @@ class Product(models.Model):
         max_digits=12,
         decimal_places=2,
     )
+    weight = models.DecimalField(
+        _('weight (g)'),
+        max_digits=8,
+        decimal_places=3,
+        default=Decimal('0.0'),
+    )
 
     # translatable fields
     title_en = models.CharField(
