@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load cart %}
+
+{% block cart %}
+    {% include 'include/cart.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="cart-main-area pt-95 pb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="table-content table-responsive coupon-all">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>{% trans 'Created at' %}</th>
+                                    <th>{% trans 'Postal code' %}</th>
+                                    <th>{% trans 'Country' %}</th>
+                                    <th>{% trans 'Address' %}</th>
+                                    <th>{% trans 'Delete' %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for address in addresses %}<tr>
+                                    <td><a href="{% url 'users:address_update' address_id=address.id %}">{{ address.created_at|date }}</a></td>
+                                    <td><a href="{% url 'users:address_update' address_id=address.id %}">{{ address.postal_code }}</a></td>
+                                    <td><a href="{% url 'users:address_update' address_id=address.id %}">{{ address.country }}</a></td>
+                                    <td class="text-justify"><a href="{% url 'users:address_update' address_id=address.id %}">{{ address }}</a></td>
+                                    <td>
+                                        <form method="post" action="{% url 'users:address_delete' address_id=address.id %}">
+                                            {% csrf_token %}
+                                            <button class="btn btn-danger" type="submit" name="DELETE"><i class="pe-7s-close"></i></button>
+                                        </form>
+                                    </td>
+                                {% endfor %}</tr>
+                            </tbody>
+                        </table>
+
+                        <div class="text-center">
+                            <a class="button" href="{% url 'users:address_create' %}">{% trans 'New address' %}</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

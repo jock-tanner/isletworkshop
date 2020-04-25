@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group as OldGroup
 from django.contrib.auth.admin import GroupAdmin, UserAdmin as OldUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import Group, User
+from .models import Address, Group, User
 
 
 class UserAdmin(OldUserAdmin):
@@ -38,3 +38,4 @@ admin.site.unregister(OldGroup)
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Group, GroupAdmin)
+admin.site.register(Address)

@@ -4418,7 +4418,7 @@ a.icon-cart-furniture span.green {
     font-weight: bold;
     color: #999999;
 }
-.furniture-login ul li::before {
+.furniture-login>.menu-hover>ul>li::before {
     background-color: #999999;
     content: "";
     height: 14px;
@@ -4428,7 +4428,7 @@ a.icon-cart-furniture span.green {
     top: 3px;
     width: 1px;
 }
-.furniture-login ul li:last-child::before {
+.furniture-login>.menu-hover>ul>li:last-child::before {
     content: none;
 }
 .furniture-search form input {
@@ -6742,7 +6742,7 @@ thead, tfoot {
 .coupon2 input {
     width: inherit;
 }
-.coupon-all input.button {
+.coupon-all .button {
     background-color: #333;
     border: 0 none;
     border-radius: 2px;
@@ -6758,7 +6758,7 @@ thead, tfoot {
     transition: all 0.3s ease-in-out 0s;
     width: inherit;
 }
-.coupon-all input.button:hover {
+.coupon-all .button:hover {
     background-color: #050035;
     border: medium none;
     color: #fff;

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load cart %}
+{% load bootstrap4 %}
+
+{% block cart %}
+    {% include 'include/cart.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="cart-main-area pt-95 pb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form class="coupon-all" method="post">
+                        {% bootstrap_form_errors form %}
+                        {% csrf_token %}
+                        {% bootstrap_form form layout='horizontal' %}
+
+                        <div class="coupon">
+                            <a class="button" href="{% url 'users:address_list' %}">{% trans 'Back' %}</a>
+                        </div>
+                        <div class="coupon2">
+                            <button class="button" type="submit">{% if view.create_view %}{% trans 'Create' %}{% else %}{% trans 'Save' %}{% endif %}</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

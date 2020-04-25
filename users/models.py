@@ -157,3 +157,45 @@ class Group(auth_models.Group):
         proxy = True
         verbose_name = _('group')
         verbose_name_plural = _('groups')
+
+
+class Address(models.Model):
+
+    user = models.ForeignKey(
+        User, verbose_name=_('user'), related_name='addresses',
+        on_delete=models.CASCADE,
+    )
+    created_at = models.DateTimeField(
+        _('created at'), auto_now_add=True,
+    )
+    postal_code = models.CharField(
+        _('postal code'), max_length=20,
+    )
+    country = models.CharField(
+        _('country'), max_length=120,
+    )
+    region = models.CharField(
+        _('state or administrative region'), max_length=120,
+        null=True, blank=True,
+    )
+    city = models.CharField(
+        _('city or town'), max_length=80,
+    )
+    street = models.CharField(
+        _('street'), max_length=80, null=True, blank=True,
+    )
+    building = models.CharField(
+        _('building number'), max_length=20, null=True, blank=True,
+    )
+    flat = models.CharField(
+        _('flat, room, office number'), max_length=80, null=True, blank=True,
+    )
+
+    class Meta:
+        verbose_name = _('address')
+        verbose_name_plural = _('addresses')
+
+    def __str__(self):
+        return ', '.join(x for x in (
+            self.city, self.street, self.building, self.flat,
+        ) if x)

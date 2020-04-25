@@ -1,9 +1,20 @@
-{% load i18n %}<ul>
-    {% if user.is_authenticated %}
-    <li>{{ user.get_short_name }}</li>
-    <li><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></li>
-    {% else %}
-    <li><a href="{% url 'login' %}?next={{ request.get_full_path }}">{% trans 'Log in' %}</a></li>
-    <li><a href="#">{% trans 'Register' %}</a></li>
-    {% endif %}
-</ul>
+{% load i18n %}<div class="menu-hover">
+    <ul>
+        {% if user.is_authenticated %}
+        <li>
+            <div class="menu-style-2 furniture-menu menu-hover">
+                {{ user.get_short_name }}
+                <ul class="single-dropdown mt-12">
+                    <li><a href="#">{% trans 'Edit profile' %}</a></li>
+                    <li><a href="{% url 'users:address_list' %}">{% trans 'Address list' %}</a></li>
+                    <li><a href="#">{% trans 'Orders' %}</a></li>
+                </ul>
+            </div>
+        </li>
+        <li><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}?next={{ request.get_full_path }}">{% trans 'Log in' %}</a></li>
+        <li><a href="#">{% trans 'Register' %}</a></li>
+        {% endif %}
+    </ul>
+</div>
