@@ -85,6 +85,25 @@ class Order(models.Model):
         self.email = self.customer.email
         super().save(*args, **kwargs)
 
+    @property
+    def total(self):
+        return Product.price_template().format(
+            sum(line.base_price for line in self.lines)
+        )
+
+    @property
+    def delivery_price(self):
+        return Product.price_template().format(
+            sum(d.base_price for d in self.deliveries)
+        )
+
+    @property
+    def total_with_delivery(self):
+        return Product.price_template().format(
+            sum(line.base_price for line in self.lines)
+            + sum(dlv.base_price for dlv in self.deliveries)
+        )
+
 
 class Delivery(models.Model):
 
@@ -141,6 +160,18 @@ class Delivery(models.Model):
         if self.address and not self.address_data:
             self.address_data = self.address.to_dict()
         super().save(*args, **kwargs)
+
+    @property
+    def total_products(self):
+        return Product.price_template().format(
+            sum(line.base_price for line in self.lines)
+        )
+
+    @property
+    def total(self):
+        return Product.price_template().format(
+            sum(line.base_price for line in self.lines) + self.base_price
+        )
 
 
 class OrderLine(models.Model):
