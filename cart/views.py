@@ -27,7 +27,7 @@ class CartView(TemplateView):
                     continue
 
                 product = products[product_id]
-                if product.type == product.product_types.unlimited:
+                if product.supply_type == product.supply_types.unlimited:
                     cart[product_id] = quantity
                 else:
                     # check inventory

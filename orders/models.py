@@ -20,7 +20,7 @@ class OrderManager(models.Manager):
 
             # check inventory
             if all([
-                product.type != product.product_types.unlimited,
+                product.supply_type != product.supply_types.unlimited,
                 product.quantity < quantity,
             ]):
                 raise ValueError(_('Not enough {}').format(product.title))
@@ -31,7 +31,7 @@ class OrderManager(models.Manager):
             )
 
             # decrease inventory
-            if product.type != product.product_types.unlimited:
+            if product.supply_type != product.supply_types.unlimited:
                 product.quantity -= quantity
                 product.save()
 

@@ -31,7 +31,7 @@
                                     {% for prod_id, prod in cart.items %}
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a href="prod.image.image.url">
+                                            <a href="{{ prod.image.image.url }}">
                                                 {% thumbnail prod.image.image '85x85' crop='center' as img %}
                                                 <img src="{{ img.url }}" alt="{{ cart_product.title }}">
                                                 {% endthumbnail %}

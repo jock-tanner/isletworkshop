@@ -13,7 +13,7 @@ from sorl.thumbnail.fields import ImageField
 
 class Product(models.Model):
 
-    product_types = Choices(
+    supply_types = Choices(
         (1, 'unique', _('One of a kind')),
         (2, 'limited', _('Limited supply')),
         (3, 'unlimited', _('Unlimited supply')),
@@ -27,10 +27,10 @@ class Product(models.Model):
         _('quantity'),
         default=1,
     )
-    type = models.PositiveSmallIntegerField(
+    supply_type = models.PositiveSmallIntegerField(
         _('type'),
-        choices=product_types,
-        default=product_types.unique,
+        choices=supply_types,
+        default=supply_types.unique,
     )
     base_price = models.DecimalField(
         _('base price'),
@@ -111,6 +111,14 @@ class Product(models.Model):
     @property
     def local_price(self) -> str:
         return self.price_template().format(self.price)
+
+    @property
+    def is_virtual(self):
+        return self.supply_type == self.supply_types.unlimited
+
+    @property
+    def is_concrete(self):
+        return self.supply_type != self.supply_types.unlimited
 
     def __str__(self):
         return self.title
