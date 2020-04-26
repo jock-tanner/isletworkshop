@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models, transaction
@@ -113,6 +115,17 @@ class Delivery(models.Model):
     )
     address_data = JSONField(
         _('snapshot of address'),
+        null=True, blank=True,
+    )
+    base_price = models.DecimalField(
+        _('base price'),
+        max_digits=12,
+        decimal_places=2,
+        default=Decimal('0.0'),
+    )
+    local_price = models.CharField(
+        _('local price'),
+        max_length=120,
         null=True, blank=True,
     )
     notes = models.TextField(
