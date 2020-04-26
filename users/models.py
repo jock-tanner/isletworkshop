@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth import models as auth_models
 from django.core.mail import send_mail
 from django.db import models
+from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.utils.translation import get_language, gettext_lazy as _
 from model_utils.choices import Choices
@@ -199,3 +200,6 @@ class Address(models.Model):
         return ', '.join(x for x in (
             self.city, self.street, self.building, self.flat,
         ) if x)
+
+    def to_dict(self):
+        return model_to_dict(self, exclude=('id', 'user'))

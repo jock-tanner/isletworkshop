@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.postgres.fields import JSONField
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 
@@ -83,6 +84,52 @@ class Order(models.Model):
         super().save(*args, **kwargs)
 
 
+class Delivery(models.Model):
+
+    created_at = models.DateTimeField(
+        _('created at'),
+        auto_now_add=True,
+    )
+    confirmed_at = models.DateTimeField(
+        _('confirmed at'),
+        null=True, blank=True,
+    )
+    order = models.ForeignKey(
+        Order,
+        verbose_name=_('order'),
+        related_name='deliveries',
+        on_delete=models.PROTECT,
+    )
+    is_virtual = models.BooleanField(
+        _('virtual delivery'),
+        default=False,
+    )
+    address = models.ForeignKey(
+        'users.Address',
+        verbose_name=_('address'),
+        related_name='deliveries',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+    )
+    address_data = JSONField(
+        _('snapshot of address'),
+        null=True, blank=True,
+    )
+    notes = models.TextField(
+        _('additional data for shop administrator'),
+        null=True, blank=True,
+    )
+
+    class Meta:
+        verbose_name = _('delivery')
+        verbose_name_plural = _('deliveries')
+
+    def save(self, *args, **kwargs):
+        if self.address and not self.address_data:
+            self.address_data = self.address.to_dict()
+        super().save(*args, **kwargs)
+
+
 class OrderLine(models.Model):
 
     order = models.ForeignKey(
@@ -113,6 +160,13 @@ class OrderLine(models.Model):
     )
     quantity = models.PositiveIntegerField(
         _('quantity'),
+    )
+    delivery = models.ForeignKey(
+        Delivery,
+        verbose_name=_('delivery record'),
+        related_name='lines',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
     )
 
     class Meta:
