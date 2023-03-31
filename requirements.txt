@@ -1,6 +1,6 @@
 Django<=2.9999999
 psycopg2==2.8.4
-redis==3.4.1
+redis==4.4.4
 Pillow<=7.9999999
 sorl-thumbnail==12.6.3
 django-redis==4.11.0
